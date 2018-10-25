@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AdmainActivity" />
+        <activity android:name=".CreateNewAccount" />
+        <activity android:name=".CreateUser" />
+        <activity android:name=".CreateAdmain" />
+        <activity android:name=".CreateServiceProvider"></activity>
     </application>
 
 </manifest>
