@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //create admin acc button
+        //create admin acc button ADD TO DATABASE NEXT
         CreateAdminAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 String name = Name.getText().toString();
