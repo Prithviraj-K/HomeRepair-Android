@@ -34,6 +34,6 @@
             android:id="@+id/textrole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registered as the" />
+            android:text="Logged as: " />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

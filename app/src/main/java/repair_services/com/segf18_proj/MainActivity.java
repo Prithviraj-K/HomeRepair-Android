@@ -21,7 +21,7 @@ import java.lang.String;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference accountsDatabase;
-    private EditText Name, Password, Email;
+    private EditText Name, Password;
     private Button Login, CreateNewUserAcc, CreateNewServiceProviderAcc, CreateAdminAcc;
     String userrole;
 
@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         //Input text fields
         Name = (EditText) findViewById(R.id.name);
         Password = (EditText) findViewById(R.id.password);
-        Email = (EditText) findViewById(R.id.email);
 
         //Buttons
         Login = (Button) findViewById(R.id.LoginButton);
@@ -47,28 +46,28 @@ public class MainActivity extends AppCompatActivity {
         //login button
         Login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                checkLogin(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
+                checkLogin(Name.getText().toString(), Password.getText().toString());
             }
         });
 
         //create user account button
         CreateNewUserAcc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                checkUser(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
+                checkUser(Name.getText().toString(), Password.getText().toString());
             }
         });
 
         //create service provider acc button
         CreateNewServiceProviderAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                checkServiceProvider(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
+                checkServiceProvider(Name.getText().toString(), Password.getText().toString());
             }
         });
 
         //create admin acc button **ADD TO DATABASE NEXT **
         CreateAdminAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                checkAdmin(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
+                checkAdmin(Name.getText().toString(), Password.getText().toString());
             }
         });
 
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     //called when login button is pressed
     //checks username and password ** still to implement
-    private void checkLogin(String name, String Email, String password){
+    private void checkLogin(String name, String password){
         Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
         loginScreen.putExtra("ADMIN", name);
         loginScreen.putExtra("ROLE", userrole); //***implement: get the role of user from database
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //called when create user account button is pressed
     //checks username and password ** still to implement
-    private void checkUser(String name, String Email, String password){
+    private void checkUser(String name, String password){
         Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
         userrole = "User";
         loginScreen.putExtra("ADMIN", name);
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //called when create service provider account button is pressed
     //checks username and password ** still to implement
-    private void checkServiceProvider(String name, String Email, String password) {
+    private void checkServiceProvider(String name, String password) {
         Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
         userrole = "Service Provider";
         loginScreen.putExtra("ADMIN", name);
@@ -102,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //called when create admin account button is pressed
     //checks username and password
-    private void checkAdmin(String name, String email, String password) {
+    private void checkAdmin(String name, String password) {
         //if name and pass = admin or Admin.. and email has @
-        if (name.equalsIgnoreCase("admin")&& password.equalsIgnoreCase("admin") && email.contains("@")){
+        if (name.equalsIgnoreCase("admin")&& password.equalsIgnoreCase("admin")){
             Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
             userrole = "Administrator";
             loginScreen.putExtra("ADMIN", name);

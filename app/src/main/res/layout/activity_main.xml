@@ -30,14 +30,6 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="56dp"

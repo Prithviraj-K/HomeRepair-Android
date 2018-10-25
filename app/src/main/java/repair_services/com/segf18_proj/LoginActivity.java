@@ -20,6 +20,6 @@ public class LoginActivity extends AppCompatActivity {
         textRole = (TextView) findViewById(R.id.textrole);
 
         welcome.setText("Welcome "+ getIntent().getStringExtra("ADMIN") + ".");
-        textRole.setText("Registered as: "+getIntent().getStringExtra("ROLE"));
+        textRole.setText("Logged as: "+getIntent().getStringExtra("ROLE"));
     }
 }
