@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "554937659478",
+    "firebase_url": "https://segf18-project.firebaseio.com",
+    "project_id": "segf18-project",
+    "storage_bucket": "segf18-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554937659478:android:cdc71261ad461585",
+        "android_client_info": {
+          "package_name": "repair_services.com.segf18_proj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554937659478-4nflvjjiu16cpoj2hoi31c3sq9uvv62b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuZyPqbeDK9jsE3eUdaBn7BAus-LxKenA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
