@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // create instance of database
-        accountsDatabase = FirebaseDatabase.getInstance().getReference("accounts");
+        accountsDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Input text fields
         Name = (EditText) findViewById(R.id.name);
@@ -54,40 +54,65 @@ public class MainActivity extends AppCompatActivity {
         //create user account button
         CreateNewUserAcc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                checkLogin(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
+                checkUser(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
             }
         });
 
         //create service provider acc button
         CreateNewServiceProviderAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                checkLogin(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
+                checkServiceProvider(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
             }
         });
 
-        //create admin acc button ADD TO DATABASE NEXT
+        //create admin acc button **ADD TO DATABASE NEXT **
         CreateAdminAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                String name = Name.getText().toString();
-                String password = Password.getText().toString();
-                //name and pass = admin or Admin
-                if (name.equalsIgnoreCase("admin")&& password.equalsIgnoreCase("admin")){
-                    Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
-                    loginScreen.putExtra("ADMIN", name);
-                    loginScreen.putExtra("ROLE", userrole);
-                    startActivity(loginScreen);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Invalid admin", Toast.LENGTH_SHORT).show();
-                }
+                checkAdmin(Name.getText().toString(),Email.getText().toString(), Password.getText().toString());
             }
         });
 
     }
 
     //called when login button is pressed
-    //checks username and password
+    //checks username and password ** still to implement
     private void checkLogin(String name, String Email, String password){
-
+        Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
+        loginScreen.putExtra("ADMIN", name);
+        loginScreen.putExtra("ROLE", userrole); //***implement: get the role of user from database
+        startActivity(loginScreen);
+    }
+    //called when create user account button is pressed
+    //checks username and password ** still to implement
+    private void checkUser(String name, String Email, String password){
+        Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
+        userrole = "User";
+        loginScreen.putExtra("ADMIN", name);
+        loginScreen.putExtra("ROLE", userrole);
+        startActivity(loginScreen);
+    }
+    //called when create service provider account button is pressed
+    //checks username and password ** still to implement
+    private void checkServiceProvider(String name, String Email, String password) {
+        Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
+        userrole = "Service Provider";
+        loginScreen.putExtra("ADMIN", name);
+        loginScreen.putExtra("ROLE", userrole);
+        startActivity(loginScreen);
+    }
+    //called when create admin account button is pressed
+    //checks username and password
+    private void checkAdmin(String name, String email, String password) {
+        //if name and pass = admin or Admin.. and email has @
+        if (name.equalsIgnoreCase("admin")&& password.equalsIgnoreCase("admin") && email.contains("@")){
+            Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
+            userrole = "Administrator";
+            loginScreen.putExtra("ADMIN", name);
+            loginScreen.putExtra("ROLE", userrole);
+            startActivity(loginScreen);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Invalid username and password.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
