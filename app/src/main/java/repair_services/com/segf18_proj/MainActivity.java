@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //login button **CHECK IF VALID**
         Login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                //checkLogin(UserName.getText().toString(), Password.getText().toString());
+                checkLogin(UserName.getText().toString(), Password.getText().toString());
             }
         });
 
@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this, "Success.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Success...", Toast.LENGTH_SHORT).show();
                             User user = new User (username, password, userrole);
-                            FirebaseDatabase.getInstance().getReference()
+                            FirebaseDatabase.getInstance().getReference("users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
 
@@ -117,16 +117,29 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    /*
+
     //called when login button is pressed
     //checks username and password ** still to implement
-    private void checkLogin(String name, String password){
-
+    private void checkLogin(String username, String password){
         Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
-        loginScreen.putExtra("ADMIN", name);
+        mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(MainActivity.this,
+                            "Cannot sign in. Please check your email and password and try again.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        loginScreen.putExtra("ADMIN", username);
         loginScreen.putExtra("ROLE", userrole); //***implement: get the role of user from database
-        startActivity(loginScreen);
-    }*/
+    }
 
     //called when create user account button is pressed
     //checks username and password ** still to implement
@@ -163,12 +176,13 @@ public class MainActivity extends AppCompatActivity {
     }
     //called when create admin account button is pressed
     //checks username and password
-    private void checkAdmin(String name, String password) {
+    private void checkAdmin(String username, String password) {
         //if name and pass = admin or Admin.. and email has @
-        if (name.equalsIgnoreCase("admin")&& password.equalsIgnoreCase("admin")){
+        if (username.equalsIgnoreCase("admin")&& password.equalsIgnoreCase("admin")){
             Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
             userrole = "Administrator";
-            loginScreen.putExtra("ADMIN", name);
+            registerUser(username,password,userrole);
+            loginScreen.putExtra("ADMIN", username);
             loginScreen.putExtra("ROLE", userrole);
             startActivity(loginScreen);
         }
