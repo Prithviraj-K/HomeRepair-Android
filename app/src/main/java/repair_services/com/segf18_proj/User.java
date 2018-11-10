@@ -8,4 +8,13 @@ public class User {
         this.password = password;
         this.userrole = userrole;
     }
+    public String getUsername(){
+        return username;
+    }
+    public String getPassword(){
+        return password;
+    }
+    public String getUserrole(){
+        return userrole;
+    }
 }

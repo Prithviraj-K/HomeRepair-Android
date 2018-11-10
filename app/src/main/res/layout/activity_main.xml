@@ -55,11 +55,5 @@
             android:layout_height="wrap_content"
             android:text=" Create Service Provider Account" />
 
-        <Button
-            android:id="@+id/createAdminAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" Create Admin Account" />
-
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -27,15 +27,13 @@ public class LoginActivity extends AppCompatActivity {
 
         logOutButton = (Button) findViewById(R.id.logOutButton);
 
-        welcome.setText("Welcome "+ getIntent().getStringExtra("ADMIN") + ".");
-        textRole.setText("Logged as: "+getIntent().getStringExtra("ROLE"));
-
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 Intent back = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(back);
+                finish();
             }
         });
     }
