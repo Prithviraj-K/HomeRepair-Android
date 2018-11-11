@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         textRole = (TextView) findViewById(R.id.textrole);
         logOutButton = (Button) findViewById(R.id.logOutButton);
         serviceButton = (Button) findViewById(R.id.serviceButton);
-        serviceButton.setVisibility(View.INVISIBLE);
 
         mDatabase.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

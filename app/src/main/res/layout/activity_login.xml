@@ -40,7 +40,8 @@
             android:id="@+id/serviceButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Services" />
+            android:text="Services"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/logOutButton"

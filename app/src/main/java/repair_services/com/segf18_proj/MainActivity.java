@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText UserName, Password;
     private Button Login, CreateNewUserAcc, CreateNewServiceProviderAcc;
     private String userrole;
-    boolean success;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
