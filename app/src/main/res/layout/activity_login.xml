@@ -37,9 +37,16 @@
             android:text="Logged as: " />
 
         <Button
+            android:id="@+id/serviceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Services" />
+
+        <Button
             android:id="@+id/logOutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

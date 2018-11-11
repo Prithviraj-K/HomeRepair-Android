@@ -8,6 +8,8 @@ public class User {
         this.password = password;
         this.userrole = userrole;
     }
+    public User (){}
+
     public String getUsername(){
         return username;
     }
