@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,12 +46,21 @@ public class AdminServicesActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Services");
 
-        final EditText serviceName = new EditText(this);
-        final EditText servicePay = new EditText(this);
-        serviceName.setHint("Service name");
-        servicePay.setHint("Hourly Rate (Exclude $)");
-        serviceName.setInputType(InputType.TYPE_CLASS_TEXT);
-        servicePay.setInputType(InputType.TYPE_CLASS_NUMBER);
+        View mView=getLayoutInflater().inflate(R.layout.service,null);
+
+        final EditText serviceName = (EditText)mView.findViewById(R.id.ServiceType);
+        final EditText servicePay = (EditText)mView.findViewById(R.id.Rate);
+        Button createService=(Button)mView.findViewById(R.id.create);
+
+        createService.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                if(!serviceName.getText().toString().isEmpty()&&!servicePay.getText().toString().isEmpty()){
+                    Toast.makeText(AdminServicesActivity.this,"create successful", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(AdminServicesActivity.this,"please fill in empty fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         builder.setView(serviceName);
         builder.setView(servicePay);
