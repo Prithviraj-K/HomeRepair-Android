@@ -1,72 +1,112 @@
 package repair_services.com.segf18_proj;
 
+import android.content.ContentProvider;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class AdminServicesActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    FirebaseListAdapter<Service> adapter;
 
-    LinearLayout buttonContainer;
-    FloatingActionButton fab;
+
+    ArrayList<Button> aList;
+    ListView serviceList;
+    Button addService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_services);
 
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Services");
 
-        fab = findViewById(R.id.addService);
-        buttonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
+        addService = (Button) findViewById(R.id.addService);
+        serviceList = (ListView) findViewById(R.id.serviceList);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        addService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createDialog();
             }
         });
+
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Services");
+
+        FirebaseListOptions<Service> options = new FirebaseListOptions.Builder<Service>()
+                .setLayout(R.layout.service_item_layout)
+                .setQuery(query, Service.class)
+                .build();
+
+        adapter = new FirebaseListAdapter<Service>(options) {
+            @Override
+            protected void populateView(View v, final Service model, int position) {
+                // Bind the service to the view
+                TextView itemName = v.findViewById(R.id.itemName);
+                TextView itemRate = v.findViewById(R.id.itemRate);
+
+                itemName.setText(model.getServName());
+                itemRate.setText(model.getRate());
+            }
+        };
+        serviceList.setAdapter(adapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        updateButtons();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     private void createDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Services");
+        builder.setTitle("Add a Service");
 
         LinearLayout layoutText = new LinearLayout(this);
         final EditText serviceName = new EditText(this);
         final EditText servicePay = new EditText(this);
-        serviceName.setHint("Set Service Name");
-        servicePay.setHint("Set Hourly Rate (Exclude $)");
-        serviceName.setInputType(InputType.TYPE_CLASS_TEXT);
-        servicePay.setInputType(InputType.TYPE_CLASS_TEXT);
+        serviceName.setHint("Service Name");
+        servicePay.setHint("Hourly Rate");
 
         layoutText.addView(serviceName);
         layoutText.addView(servicePay);
@@ -75,10 +115,15 @@ public class AdminServicesActivity extends AppCompatActivity {
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String serviceText = serviceName.getText().toString();
-                String servicePayText = servicePay.getText().toString();
-                writeService(serviceText,servicePayText);
-                updateButtons();
+                if (serviceName.getText().toString().length()!=0 || servicePay.getText().toString().length() !=0 || TextUtils.isDigitsOnly(servicePay.getText()))  {
+                    String serviceText = serviceName.getText().toString();
+                    String servicePayText = servicePay.getText().toString();
+                    Service service = new Service (serviceText,servicePayText);
+                    mDatabase.push().setValue(service);
+                }
+                else{
+                    Toast.makeText(AdminServicesActivity.this, "Invalid entry.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -91,53 +136,25 @@ public class AdminServicesActivity extends AppCompatActivity {
     }
 
     //save service to firebase
-    private void writeService(String serviceText, String servicePayText){
-        Service service = new Service (serviceText,servicePayText);
-        mDatabase.child("Services").setValue(service);
-    }
+    /*private void writeService(String serviceName, String serviceRate){
+        Service service = new Service (serviceName,serviceRate);
+        mDatabase.child("Services").setValue(serviceName);
+        mDatabase.child("Services").child(serviceName).setValue(serviceRate);
+    }*/
 
-    private void updateButtons(){
-        final ArrayList<Button> servicesList = new ArrayList<>();
-        FirebaseDatabase.getInstance().getReference().child("Services")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            Service service = dataSnapshot.getValue(Service.class);
-                            final String name = service.getServName();
-                            final String pay = service.getHourlypay();
-                            Button button = new Button(getApplicationContext());
-                            button.setText(name + ": $ " + pay);
-                            button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    createEditDialog(name, pay);
-                                }
-                            });
-                            servicesList.add(button);
-                            buttonContainer.addView(button);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(AdminServicesActivity.this, "Firebase Database Error",Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-    private void createEditDialog(final String name, final String pay){
+    private void createEditDialog(final Service service){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Service");
-
+        builder.setTitle("Edit "+ service.getServName() + " Service");
         LinearLayout layoutText = new LinearLayout(this);
         final EditText serviceName = new EditText(this);
         final EditText servicePay = new EditText(this);
         serviceName.setHint("Change Service Name");
-        servicePay.setHint("Change Hourly Rate (Exclude $)");
+        servicePay.setHint("Change Rate ($)");
         serviceName.setInputType(InputType.TYPE_CLASS_TEXT);
         servicePay.setInputType(InputType.TYPE_CLASS_TEXT);
 
         layoutText.addView(serviceName);
+        layoutText.addView(servicePay);
         layoutText.addView(servicePay);
         builder.setView(layoutText);
 
@@ -146,16 +163,20 @@ public class AdminServicesActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String serviceText = serviceName.getText().toString();
                 String servicePayText = servicePay.getText().toString();
-                writeService(serviceText,servicePayText);
-                updateButtons();
+                if (serviceText.length()!=0 && servicePayText.length() !=0) {
+                    service.setServName(serviceText);
+                    service.setRate(servicePayText);
+                }
+                else{
+                    serviceName.setError("Name required");
+                    servicePay.setError("Rate required");
+                }
             }
         });
         builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mDatabase.child("Services").child(name).removeValue();
-                mDatabase.child("Services").child(pay).removeValue();
-                updateButtons();
+                mDatabase.child(service.getServName()).removeValue();
             }
         });
         builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {

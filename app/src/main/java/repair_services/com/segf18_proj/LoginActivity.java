@@ -28,8 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView welcome, textRole;
     private Button logOutButton, serviceButton;
 
-    String username;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +46,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                username = user.getUsername();
+                String username = user.getUsername();
                 String userRole = user.getUserrole();
+
+                if (userRole.equals("Admin")){
+                    serviceButton.setVisibility(View.VISIBLE);
+                }
 
                 welcome.setText ("Welcome: " + username);
                 textRole.setText("Logged in as: "+ userRole);
-
-                if (userRole.equals("admin")){
-                    serviceButton.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
