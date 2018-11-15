@@ -1,11 +1,11 @@
 package repair_services.com.segf18_proj;
 
 public class Service {
-    public String servName, rate;
+    public String servName, servRate;
 
-    public Service(String servName, String rate){
+    public Service(String servName, String servRate){
         this.servName = servName;
-        this.rate = rate;
+        this.servRate = servRate;
     }
 
     public Service(){
@@ -17,13 +17,13 @@ public class Service {
     }
 
     public void setServName(String name){
-        name = servName;
+        servName = name;
     }
 
-    public String getRate() {
-        return rate;
+    public String getServRate() {
+        return servRate;
     }
     public void setRate(String nrate){
-        nrate = rate;
+        servRate = nrate;
     }
 }

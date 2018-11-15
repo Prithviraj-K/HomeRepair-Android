@@ -76,11 +76,11 @@ public class AdminServicesActivity extends AppCompatActivity {
             @Override
             protected void populateView(View v, final Service model, int position) {
                 // Bind the service to the view
-                TextView itemName = v.findViewById(R.id.itemName);
-                TextView itemRate = v.findViewById(R.id.itemRate);
+                TextView itemName = v.findViewById(R.id.servName);
+                TextView itemRate = v.findViewById(R.id.servRate);
 
                 itemName.setText(model.getServName());
-                itemRate.setText(model.getRate());
+                itemRate.setText(model.getServRate());
             }
         };
         serviceList.setAdapter(adapter);
