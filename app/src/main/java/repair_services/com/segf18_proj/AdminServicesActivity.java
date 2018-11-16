@@ -57,6 +57,14 @@ public class AdminServicesActivity extends AppCompatActivity {
         addService = (Button) findViewById(R.id.addService);
         serviceList = (ListView) findViewById(R.id.serviceList);
 
+        serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DatabaseReference itemRef = adapter.getRef(i);
+                itemRef.removeValue();
+            }
+        });
+
         addService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,13 +92,6 @@ public class AdminServicesActivity extends AppCompatActivity {
 
                 itemName.setText(model.getServName());
                 itemRate.setText("$ " + model.getServRate());
-
-                /*v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Toast.makeText(AdminServicesActivity.this, "Edit now", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
             }
         };
         serviceList.setAdapter(adapter);
