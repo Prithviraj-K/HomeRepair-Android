@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                     serviceButton.setVisibility(View.VISIBLE);
                 }
 
-                welcome.setText ("Welcome: " + username);
+                welcome.setText ("Welcome " + username);
                 textRole.setText("Logged in as: "+ userRole);
             }
 

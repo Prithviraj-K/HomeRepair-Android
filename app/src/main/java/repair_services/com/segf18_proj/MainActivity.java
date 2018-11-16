@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         else{
-            UserName.setError("Name Required");
-            Password.setError("Password required");
+            UserName.setError("Required");
+            Password.setError("Required");
         }
     }
 

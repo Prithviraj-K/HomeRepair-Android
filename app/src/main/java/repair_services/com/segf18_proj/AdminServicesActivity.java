@@ -3,6 +3,7 @@ package repair_services.com.segf18_proj;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -59,7 +60,9 @@ public class AdminServicesActivity extends AppCompatActivity {
         addService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createDialog();
+                finish();
+                Intent createActivity = new Intent(AdminServicesActivity.this, CreateActivity.class);
+                startActivity(createActivity);
             }
         });
 
@@ -80,7 +83,14 @@ public class AdminServicesActivity extends AppCompatActivity {
                 TextView itemRate = v.findViewById(R.id.servRate);
 
                 itemName.setText(model.getServName());
-                itemRate.setText(model.getServRate());
+                itemRate.setText("$ " + model.getServRate());
+
+                /*v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Toast.makeText(AdminServicesActivity.this, "Edit now", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
             }
         };
         serviceList.setAdapter(adapter);
@@ -96,95 +106,5 @@ public class AdminServicesActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
-    }
-
-    private void createDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add a Service");
-
-        LinearLayout layoutText = new LinearLayout(this);
-        final EditText serviceName = new EditText(this);
-        final EditText servicePay = new EditText(this);
-        serviceName.setHint("Service Name");
-        servicePay.setHint("Hourly Rate");
-
-        layoutText.addView(serviceName);
-        layoutText.addView(servicePay);
-        builder.setView(layoutText);
-
-        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (serviceName.getText().toString().length()!=0 || servicePay.getText().toString().length() !=0 || TextUtils.isDigitsOnly(servicePay.getText()))  {
-                    String serviceText = serviceName.getText().toString();
-                    String servicePayText = servicePay.getText().toString();
-                    Service service = new Service (serviceText,servicePayText);
-                    mDatabase.push().setValue(service);
-                }
-                else{
-                    Toast.makeText(AdminServicesActivity.this, "Invalid entry.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    //save service to firebase
-    /*private void writeService(String serviceName, String serviceRate){
-        Service service = new Service (serviceName,serviceRate);
-        mDatabase.child("Services").setValue(serviceName);
-        mDatabase.child("Services").child(serviceName).setValue(serviceRate);
-    }*/
-
-    private void createEditDialog(final Service service){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit "+ service.getServName() + " Service");
-        LinearLayout layoutText = new LinearLayout(this);
-        final EditText serviceName = new EditText(this);
-        final EditText servicePay = new EditText(this);
-        serviceName.setHint("Change Service Name");
-        servicePay.setHint("Change Rate ($)");
-        serviceName.setInputType(InputType.TYPE_CLASS_TEXT);
-        servicePay.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        layoutText.addView(serviceName);
-        layoutText.addView(servicePay);
-        layoutText.addView(servicePay);
-        builder.setView(layoutText);
-
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String serviceText = serviceName.getText().toString();
-                String servicePayText = servicePay.getText().toString();
-                if (serviceText.length()!=0 && servicePayText.length() !=0) {
-                    service.setServName(serviceText);
-                    service.setRate(servicePayText);
-                }
-                else{
-                    serviceName.setError("Name required");
-                    servicePay.setError("Rate required");
-                }
-            }
-        });
-        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mDatabase.child(service.getServName()).removeValue();
-            }
-        });
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        builder.show();
     }
 }

@@ -7,47 +7,43 @@
     tools:context=".LoginActivity">
 
     <LinearLayout
-        android:layout_width="370dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="3dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Welcome"
-            android:textSize="24sp"
-            tools:layout_editor_absoluteX="58dp"
-            tools:layout_editor_absoluteY="3dp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/textrole"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logged as: " />
+            android:layout_gravity="center"
+            android:text="Logged as: "
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/serviceButton"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Services"
+            android:backgroundTint="@color/colorPrimary"
             android:visibility="invisible" />
 
         <Button
             android:id="@+id/logOutButton"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Logout" />
+            android:text="Logout"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="#FFF"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
