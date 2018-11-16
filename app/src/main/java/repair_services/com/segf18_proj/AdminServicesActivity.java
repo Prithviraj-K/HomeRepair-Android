@@ -61,7 +61,8 @@ public class AdminServicesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DatabaseReference itemRef = adapter.getRef(i);
-                itemRef.removeValue();
+
+                //**CREATE NEW ACTIVITY TO EDIT**
             }
         });
 
