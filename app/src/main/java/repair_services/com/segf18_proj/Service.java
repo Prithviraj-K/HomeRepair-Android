@@ -23,7 +23,7 @@ public class Service {
     public String getServRate() {
         return servRate;
     }
-    public void setRate(String nrate){
-        servRate = nrate;
+    public void setRate(String newRate){
+        servRate = newRate;
     }
 }

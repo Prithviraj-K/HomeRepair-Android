@@ -60,11 +60,60 @@ public class AdminServicesActivity extends AppCompatActivity {
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DatabaseReference itemRef = adapter.getRef(i);
+                final DatabaseReference itemRef = adapter.getRef(i);
+
+                final int listBTNPosition = i;
 
                 //**CREATE NEW ACTIVITY TO EDIT**
-            }
-        });
+                final AlertDialog updateDialog = new AlertDialog.Builder(AdminServicesActivity.this).create();
+                updateDialog.setTitle("Edit Service");
+
+                LinearLayout layoutUpdate = new LinearLayout(AdminServicesActivity.this);
+                layoutUpdate.setOrientation(LinearLayout.VERTICAL);
+
+                final EditText inputName = new EditText(AdminServicesActivity.this);
+                inputName.setHint(""+adapter.getItem(i).getServName());
+                inputName.setInputType(InputType.TYPE_CLASS_TEXT);
+                layoutUpdate.addView(inputName);
+
+                final EditText inputRate = new EditText(AdminServicesActivity.this);
+                inputRate.setHint(""+adapter.getItem(i).getServRate());
+                inputRate.setInputType(InputType.TYPE_CLASS_NUMBER);
+                layoutUpdate.addView(inputRate);
+
+                updateDialog.setView(layoutUpdate);
+
+                updateDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String updatedName = inputName.getText().toString();
+                        String updatedRate = inputRate.getText().toString();
+
+                        if(inputName.getText().length()!=0 && inputRate.getText().length()!=0){
+                            itemRef.child("servName").setValue(updatedName);
+                            itemRef.child("servRate").setValue(updatedRate);
+                            Toast.makeText(AdminServicesActivity.this,"Updated",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (inputName.getText().length()!=0){
+                            itemRef.child("servName").setValue(updatedName);
+                            Toast.makeText(AdminServicesActivity.this,"Updated",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (inputRate.getText().length()!=0){
+                            itemRef.child("servRate").setValue(updatedRate);
+                            Toast.makeText(AdminServicesActivity.this,"Updated",Toast.LENGTH_SHORT).show();
+                        }
+                        updateDialog.dismiss();
+                    }
+                });
+                updateDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Delete",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                itemRef.removeValue();
+                                updateDialog.dismiss();
+                            }
+                        });
+                updateDialog.show();
+        }});
 
         addService.setOnClickListener(new View.OnClickListener() {
             @Override
