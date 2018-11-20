@@ -119,7 +119,7 @@ public class AdminServicesActivity extends AppCompatActivity {
                 TextView itemName = v.findViewById(R.id.servName);
                 TextView itemRate = v.findViewById(R.id.servRate);
 
-                itemName.setText(model.getServName());
+                itemName.setText(model.getServName());g
                 itemRate.setText("$ " + model.getServRate());
             }
         };

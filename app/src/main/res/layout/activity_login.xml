@@ -38,6 +38,38 @@
             android:backgroundTint="@color/colorPrimary"
             android:visibility="invisible" />
 
+        <EditText
+            android:id="@+id/serviceAddress"
+            android:visibility="invisible"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address" />
+        <EditText
+            android:id="@+id/servicePhone"
+            android:visibility="invisible"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone number"/>
+        <EditText
+            android:id="@+id/serviceCompany"
+            android:visibility="invisible"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name of Company"/>
+        <EditText
+            android:id="@+id/serviceDescription"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="General Description"/>
+        <Switch
+            android:id="@+id/licensed"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Licensed" />
+
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="fill_parent"
@@ -45,6 +77,8 @@
             android:text="Logout"
             android:backgroundTint="@color/colorAccent"
             android:textColor="#FFF"/>
+
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
