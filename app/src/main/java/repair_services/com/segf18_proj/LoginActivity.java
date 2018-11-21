@@ -97,8 +97,14 @@ public class LoginActivity extends AppCompatActivity {
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String address = serviceAddress.getText().toString();
+                String phoneNum = servicePhone.getText().toString();
+                String company = serviceCompany.getText().toString();
+                String description = serviceDescription.getText().toString();
+
                 if((serviceAddress.getText().length()!=0) && (servicePhone.getText().length()!=0) && (serviceCompany.getText().length()!=0)){
-                    
+                    UserProviderInfo userProviderInfo = new UserProviderInfo(address,phoneNum,company,description,licensed.isChecked());
+                    mDatabase.child(mUser.getUid()).child("Info").setValue(userProviderInfo);
                 }
                 else{
                     serviceAddress.setError("Required");

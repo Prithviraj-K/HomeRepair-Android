@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:hint="Licensed"
+            android:text="Licensed"
             android:showText="true"
             android:textOn="Yes"
             android:textOff="No"/>
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/enterBtn"
-            android:text="Continue"
+            android:text="Continue to Profile"
             android:backgroundTint="@color/colorPrimary"
             android:visibility="invisible"/>
 
