@@ -38,6 +38,57 @@
             android:backgroundTint="@color/colorPrimary"
             android:visibility="invisible" />
 
+        <TextView
+            android:id="@+id/profileText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Profile Information"
+            android:visibility="invisible"/>
+
+        <EditText
+            android:id="@+id/serviceAddress"
+            android:visibility="invisible"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address" />
+        <EditText
+            android:id="@+id/servicePhone"
+            android:visibility="invisible"
+            android:inputType="number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone number"/>
+        <EditText
+            android:id="@+id/serviceCompany"
+            android:visibility="invisible"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name of Company"/>
+        <EditText
+            android:id="@+id/serviceDescription"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="General Description"/>
+        <Switch
+            android:id="@+id/licensed"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Licensed"
+            android:showText="true"
+            android:textOn="Yes"
+            android:textOff="No"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/enterBtn"
+            android:text="Enter"
+            android:backgroundTint="@color/colorPrimary"
+            android:visibility="invisible"/>
+
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="fill_parent"
