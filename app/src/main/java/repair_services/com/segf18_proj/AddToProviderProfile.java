@@ -54,6 +54,7 @@ public class AddToProviderProfile extends AppCompatActivity {
                         String addTime = "Add Time";
                         ProviderAvailablity providerAvailablity = new ProviderAvailablity(serviceName,addDay,addTime);
                         mDatabase.child(mUser.getUid()).child("Services").push().setValue(providerAvailablity);
+                        finish();
                         Intent intent = new Intent(AddToProviderProfile.this, ProviderProfile.class);
                         startActivity(intent);
 
