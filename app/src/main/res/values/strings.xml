@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">Home Repair</string>
     <string name="title_activity_add_service">AddService</string>
+    
+    <string-array name="DayList">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <string-array name="TimeList">
+        <item>9 AM</item>
+        <item>12 PM</item>
+        <item>3 PM</item>
+        <item>6 PM</item>
+        <item>9 PM</item>
+    </string-array>
+
 </resources>

@@ -1,12 +1,17 @@
 package repair_services.com.segf18_proj;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -87,6 +92,59 @@ public class ProviderProfile extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        profileServicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final DatabaseReference itemRef = listAdapter.getRef(i);
+
+                final AlertDialog.Builder updateDialog = new AlertDialog.Builder(ProviderProfile.this);
+                View mView = getLayoutInflater().inflate(R.layout.spinner_dialogue,null);
+                updateDialog.setTitle("Edit Day and Time");
+                //cast the views
+                final Spinner spinnerDay = (Spinner) mView.findViewById(R.id.spinnerDay);
+                final Spinner spinnerTime = (Spinner) mView.findViewById(R.id.spinnerTime);
+
+                ArrayAdapter<String> adapterDay = new ArrayAdapter<String>(ProviderProfile.this,android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.DayList));
+                adapterDay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerDay.setAdapter(adapterDay);
+
+                ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(ProviderProfile.this,android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.TimeList));
+                adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerTime.setAdapter(adapterTime);
+
+                updateDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String day = spinnerDay.getSelectedItem().toString();
+                        String time = spinnerTime.getSelectedItem().toString();
+                        itemRef.child("dayOfWeek").setValue(day);
+                        itemRef.child("serviceTime").setValue(time);
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                updateDialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        itemRef.removeValue();
+                        dialogInterface.dismiss();
+                    }
+                });
+                updateDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                updateDialog.setView(mView);
+                AlertDialog dialog = updateDialog.create();
+                dialog.show();
             }
         });
 

@@ -50,10 +50,13 @@ public class AddToProviderProfile extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Service service = dataSnapshot.getValue(Service.class);
                         String serviceName = service.getServName();
-                        ProviderAvailablity providerAvailablity = new ProviderAvailablity(serviceName,serviceName,serviceName);
+                        String addDay= "Add Day";
+                        String addTime = "Add Time";
+                        ProviderAvailablity providerAvailablity = new ProviderAvailablity(serviceName,addDay,addTime);
                         mDatabase.child(mUser.getUid()).child("Services").push().setValue(providerAvailablity);
                         Intent intent = new Intent(AddToProviderProfile.this, ProviderProfile.class);
                         startActivity(intent);
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
