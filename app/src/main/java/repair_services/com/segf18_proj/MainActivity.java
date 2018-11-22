@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mAuth.getCurrentUser() != null){
+        if (mUser != null){
             Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginScreen);
         }

@@ -19,7 +19,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".AdminServicesActivity" />
         <activity android:name=".CreateActivity" />
-        <activity android:name=".ProviderProfile"></activity>
+        <activity android:name=".ProviderProfile" />
+        <activity android:name=".AddToProviderProfile"></activity>
     </application>
 
 </manifest>

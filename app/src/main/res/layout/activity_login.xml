@@ -30,14 +30,6 @@
             android:text="Logged as: "
             android:layout_marginBottom="20dp"/>
 
-        <Button
-            android:id="@+id/serviceButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Services"
-            android:backgroundTint="@color/colorPrimary"
-            android:visibility="invisible" />
-
         <TextView
             android:id="@+id/profileText"
             android:layout_width="wrap_content"
@@ -90,6 +82,14 @@
             android:text="Continue to Profile"
             android:backgroundTint="@color/colorPrimary"
             android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/serviceButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Services"
+            android:backgroundTint="@color/colorPrimary"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/logOutButton"

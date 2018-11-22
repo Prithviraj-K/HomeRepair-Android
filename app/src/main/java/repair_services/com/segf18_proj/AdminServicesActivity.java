@@ -43,7 +43,6 @@ public class AdminServicesActivity extends AppCompatActivity {
 
                 final int listBTNPosition = i;
 
-                //**CREATE NEW ACTIVITY TO EDIT**
                 final AlertDialog updateDialog = new AlertDialog.Builder(AdminServicesActivity.this).create();
                 updateDialog.setTitle("Edit Service");
 

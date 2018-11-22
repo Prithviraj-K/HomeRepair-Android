@@ -62,26 +62,29 @@ public class LoginActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 String username = user.getUsername();
                 String userRole = user.getUserrole();
+                DatabaseReference checkInfo = FirebaseDatabase.getInstance().getReference().child(mUser.getUid());
 
                 if (userRole.equals("Admin")){
-                    serviceButton.setVisibility(View.VISIBLE);
-                    serviceCompany.setVisibility(View.INVISIBLE);
-                    serviceAddress.setVisibility(View.INVISIBLE);
-                    servicePhone.setVisibility(View.INVISIBLE);
-                    serviceDescription.setVisibility(View.INVISIBLE);
-                    licensed.setVisibility(View.INVISIBLE);
-                    profileText.setVisibility(View.INVISIBLE);
-                    enterBtn.setVisibility(View.INVISIBLE);
+                    makeVisibleAdmin();
                 }
                 else if (userRole.equals("Service Provider")){
-                    serviceButton.setVisibility(View.INVISIBLE);
-                    serviceCompany.setVisibility(View.VISIBLE);
-                    serviceAddress.setVisibility(View.VISIBLE);
-                    servicePhone.setVisibility(View.VISIBLE);
-                    serviceDescription.setVisibility(View.VISIBLE);
-                    licensed.setVisibility(View.VISIBLE);
-                    profileText.setVisibility(View.VISIBLE);
-                    enterBtn.setVisibility(View.VISIBLE);
+                    checkInfo.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild("Info")){
+                                Intent profile = new Intent(LoginActivity.this, ProviderProfile.class);
+                                startActivity(profile);
+                            }
+                            else{
+                                makeVisibleProfileInfo();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
                 welcome.setText ("Welcome " + username);
@@ -101,10 +104,13 @@ public class LoginActivity extends AppCompatActivity {
                 String phoneNum = servicePhone.getText().toString();
                 String company = serviceCompany.getText().toString();
                 String description = serviceDescription.getText().toString();
+                boolean isLicensed = licensed.isChecked();
 
                 if((serviceAddress.getText().length()!=0) && (servicePhone.getText().length()!=0) && (serviceCompany.getText().length()!=0)){
-                    UserProviderInfo userProviderInfo = new UserProviderInfo(address,phoneNum,company,description,licensed.isChecked());
+                    UserProviderInfo userProviderInfo = new UserProviderInfo(address,phoneNum,company,description,isLicensed);
                     mDatabase.child(mUser.getUid()).child("Info").setValue(userProviderInfo);
+                    Intent profile = new Intent(LoginActivity.this, ProviderProfile.class);
+                    startActivity(profile);
                 }
                 else{
                     serviceAddress.setError("Required");
@@ -137,11 +143,31 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mAuth.getCurrentUser() == null){
+        if (mUser == null){
             finish();
             Intent main = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(main);
-
         }
+    }
+
+    private void makeVisibleProfileInfo(){
+        serviceButton.setVisibility(View.INVISIBLE);
+        serviceCompany.setVisibility(View.VISIBLE);
+        serviceAddress.setVisibility(View.VISIBLE);
+        servicePhone.setVisibility(View.VISIBLE);
+        serviceDescription.setVisibility(View.VISIBLE);
+        licensed.setVisibility(View.VISIBLE);
+        profileText.setVisibility(View.VISIBLE);
+        enterBtn.setVisibility(View.VISIBLE);
+    }
+    private void makeVisibleAdmin(){
+        serviceButton.setVisibility(View.VISIBLE);
+        serviceCompany.setVisibility(View.INVISIBLE);
+        serviceAddress.setVisibility(View.INVISIBLE);
+        servicePhone.setVisibility(View.INVISIBLE);
+        serviceDescription.setVisibility(View.INVISIBLE);
+        licensed.setVisibility(View.INVISIBLE);
+        profileText.setVisibility(View.INVISIBLE);
+        enterBtn.setVisibility(View.INVISIBLE);
     }
 }
