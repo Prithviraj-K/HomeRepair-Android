@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
-
+//isValidName to be implemented
 public class ProfileNameValidationTest {
     @Test
     public void profileName_CorrectProfileNameSample_ReturnTrue() {
