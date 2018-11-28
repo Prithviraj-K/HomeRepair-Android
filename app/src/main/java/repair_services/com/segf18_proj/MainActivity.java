@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mUser != null){
+            finish();
             Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginScreen);
         }
@@ -90,10 +91,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        finish();
                         startActivity(loginScreen);
                     } else {
                         Toast.makeText(MainActivity.this,
-                                "Cannot sign in. Please check your email and password and try again.", Toast.LENGTH_SHORT).show();
+                                "Please check your email and password and try again.", Toast.LENGTH_SHORT).show();
                     }
 
                 }

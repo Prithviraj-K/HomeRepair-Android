@@ -33,7 +33,7 @@ public class ProviderProfile extends AppCompatActivity {
     FirebaseListAdapter<ProviderAvailablity> listAdapter;
 
     TextView textService, logged, address, phone, company, description, currentServicesText;
-    Button addService;
+    Button addService, logoutBtn;
     ListView profileServicesList;
 
     @Override
@@ -53,6 +53,17 @@ public class ProviderProfile extends AppCompatActivity {
         company = findViewById(R.id.Company);
         description = findViewById(R.id.description);
         profileServicesList = findViewById(R.id.profileServiceList);
+        logoutBtn = findViewById(R.id.logoutBtn);
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                finish();
+                Intent back = new Intent(ProviderProfile.this, MainActivity.class);
+                startActivity(back);
+            }
+        });
 
         addService.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/enterBtn"
-            android:text="Continue to Profile"
+            android:text="Continue"
             android:backgroundTint="@color/colorPrimary"
             android:visibility="invisible"/>
 
@@ -97,7 +97,8 @@
             android:layout_height="wrap_content"
             android:text="Logout"
             android:backgroundTint="@color/colorAccent"
-            android:textColor="#FFF"/>
+            android:textColor="#FFF"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

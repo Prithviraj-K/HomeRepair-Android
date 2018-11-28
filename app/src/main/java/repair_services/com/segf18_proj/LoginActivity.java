@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         logOutButton = (Button) findViewById(R.id.logOutButton);
         serviceButton = (Button) findViewById(R.id.serviceButton);
 
+        //Listener for which user is currently logged in
         mDatabase.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild("Info")){
+                                finish();
                                 Intent profile = new Intent(LoginActivity.this, ProviderProfile.class);
                                 startActivity(profile);
                             }
@@ -85,6 +87,11 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     });
+                }
+                else if (userRole.equals("User")){
+                    finish();
+                    Intent userProfile = new Intent(LoginActivity.this, UserProfile.class);
+                    startActivity(userProfile);
                 }
 
                 welcome.setText ("Welcome " + username);
@@ -133,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
         serviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 Intent adminServices = new Intent(LoginActivity.this, AdminServicesActivity.class);
                 startActivity(adminServices);
             }
@@ -152,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void makeVisibleProfileInfo(){
         serviceButton.setVisibility(View.INVISIBLE);
+        logOutButton.setVisibility(View.VISIBLE);
         serviceCompany.setVisibility(View.VISIBLE);
         serviceAddress.setVisibility(View.VISIBLE);
         servicePhone.setVisibility(View.VISIBLE);
@@ -161,6 +168,7 @@ public class LoginActivity extends AppCompatActivity {
         enterBtn.setVisibility(View.VISIBLE);
     }
     private void makeVisibleAdmin(){
+        logOutButton.setVisibility(View.VISIBLE);
         serviceButton.setVisibility(View.VISIBLE);
         serviceCompany.setVisibility(View.INVISIBLE);
         serviceAddress.setVisibility(View.INVISIBLE);

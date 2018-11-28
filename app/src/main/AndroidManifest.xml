@@ -20,7 +20,9 @@
         <activity android:name=".AdminServicesActivity" />
         <activity android:name=".CreateActivity" />
         <activity android:name=".ProviderProfile" />
-        <activity android:name=".AddToProviderProfile"></activity>
+        <activity android:name=".AddToProviderProfile" />
+        <activity android:name=".UserProfile" />
+        <activity android:name=".UserBook"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Home Repair</string>
     <string name="title_activity_add_service">AddService</string>
-    
+
     <string-array name="DayList">
         <item>Sunday</item>
         <item>Monday</item>

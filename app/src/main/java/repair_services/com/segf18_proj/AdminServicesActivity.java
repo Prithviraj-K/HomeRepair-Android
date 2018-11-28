@@ -96,7 +96,6 @@ public class AdminServicesActivity extends AppCompatActivity {
         addService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 Intent createActivity = new Intent(AdminServicesActivity.this, CreateActivity.class);
                 startActivity(createActivity);
             }
