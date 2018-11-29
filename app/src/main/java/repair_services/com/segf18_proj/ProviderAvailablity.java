@@ -1,6 +1,8 @@
 package repair_services.com.segf18_proj;
 
-public class ProviderAvailablity {
+import java.io.Serializable;
+
+public class ProviderAvailablity implements Serializable {
     public String serviceName, dayOfWeek, serviceTime;
 
     public ProviderAvailablity (String serviceName, String dayOfWeek, String time){

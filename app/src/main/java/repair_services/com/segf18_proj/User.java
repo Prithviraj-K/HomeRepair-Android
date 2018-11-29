@@ -1,6 +1,8 @@
 package repair_services.com.segf18_proj;
 
-public class User {
+import java.io.Serializable;
+
+public class User{
     public String username, password, userrole;
 
     public User(String username, String password, String userrole){

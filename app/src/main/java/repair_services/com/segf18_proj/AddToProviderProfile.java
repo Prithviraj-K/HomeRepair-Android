@@ -29,6 +29,8 @@ public class AddToProviderProfile extends AppCompatActivity {
 
     ListView fullList;
 
+    User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,7 @@ public class AddToProviderProfile extends AppCompatActivity {
                         String addDay= "Add Day";
                         String addTime = "Add Time";
                         ProviderAvailablity providerAvailablity = new ProviderAvailablity(serviceName,addDay,addTime);
-                        mDatabase.child(mUser.getUid()).child("Services").push().setValue(providerAvailablity);
+                        mDatabase.child(mUser.getUid()).child("Services").child(keyService).setValue(providerAvailablity);
                         mDatabase.child("Services").child(keyService).child("Providers").push().setValue(mUser.getUid());
                         finish();
                         Intent intent = new Intent(AddToProviderProfile.this, ProviderProfile.class);

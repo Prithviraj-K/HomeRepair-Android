@@ -2,6 +2,7 @@ package repair_services.com.segf18_proj;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
@@ -24,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.security.Provider;
 
 public class ProviderProfile extends AppCompatActivity {
 
@@ -110,6 +114,7 @@ public class ProviderProfile extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final DatabaseReference itemRef = listAdapter.getRef(i);
+                final String serviceKey = itemRef.getKey();
 
                 final AlertDialog.Builder updateDialog = new AlertDialog.Builder(ProviderProfile.this);
                 View mView = getLayoutInflater().inflate(R.layout.spinner_dialogue,null);
@@ -142,6 +147,23 @@ public class ProviderProfile extends AppCompatActivity {
                 updateDialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        DatabaseReference providerRef = mDatabase.child(serviceKey).child("Providers");
+                        providerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                                    String userID = (String) postSnapshot.getValue();
+                                    if(userID.equals(mUser.getUid())){
+                                        postSnapshot.getRef().removeValue();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                         itemRef.removeValue();
                         dialogInterface.dismiss();
                     }

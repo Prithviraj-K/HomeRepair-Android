@@ -1,6 +1,8 @@
 package repair_services.com.segf18_proj;
 
-public class Service {
+import java.io.Serializable;
+
+public class Service{
     public String servName, servRate;
 
     public Service(String servName, String servRate){
@@ -23,7 +25,7 @@ public class Service {
     public String getServRate() {
         return servRate;
     }
-    public void setRate(String newRate){
+    public void setservRate(String newRate){
         servRate = newRate;
     }
 }

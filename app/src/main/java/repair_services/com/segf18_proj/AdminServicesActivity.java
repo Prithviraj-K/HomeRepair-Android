@@ -41,8 +41,6 @@ public class AdminServicesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final DatabaseReference itemRef = adapter.getRef(i);
 
-                final int listBTNPosition = i;
-
                 final AlertDialog updateDialog = new AlertDialog.Builder(AdminServicesActivity.this).create();
                 updateDialog.setTitle("Edit Service");
 

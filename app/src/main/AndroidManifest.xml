@@ -22,7 +22,8 @@
         <activity android:name=".ProviderProfile" />
         <activity android:name=".AddToProviderProfile" />
         <activity android:name=".UserProfile" />
-        <activity android:name=".UserBook"></activity>
+        <activity android:name=".UserBook" />
+        <activity android:name=".UserBookProvider"></activity>
     </application>
 
 </manifest>
