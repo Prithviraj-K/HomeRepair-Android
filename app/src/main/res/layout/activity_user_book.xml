@@ -23,13 +23,13 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"/>
 
-        <Button
+        <!--<Button
             android:id="@+id/sortBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sort by"
             android:padding="3dp"
-            android:layout_gravity="right" />
+            android:layout_gravity="right" />-->
 
         <ListView
             android:id="@+id/serviceList"
